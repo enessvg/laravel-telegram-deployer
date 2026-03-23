@@ -12,7 +12,12 @@ Telegram webhook tetiklemeli, TOTP doğrulamalı ve queue tabanlı deploy/action
 
 Sadece şu format desteklenir:
 
-`/run {action} {token}`
+`/run {action} [key=value ...] {token}`
+
+Örnek:
+
+- `/run deploy 123456`
+- `/run seed class=Database\\Seeders\\UserSeeder 123456`
 
 ## Özellikler
 
@@ -50,3 +55,16 @@ Sadece şu format desteklenir:
 - `queue.connection`, `queue.name`
 - `locks.global_lock_seconds`
 - `actions`
+
+## Parametreli action örneği
+
+```php
+'actions' => [
+    'seed' => [
+        [
+            'type' => 'artisan',
+            'command' => 'db:seed --class={class} --force',
+        ],
+    ],
+],
+```

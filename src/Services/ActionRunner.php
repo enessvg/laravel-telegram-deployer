@@ -10,9 +10,11 @@ use RuntimeException;
 class ActionRunner
 {
     /**
+     * @param array<string, string> $params
+     *
      * @return array<int, array<string, mixed>>
      */
-    public function run(string $action): array
+    public function run(string $action, array $params = []): array
     {
         $actions = (array) config('telegram-deployer.actions', []);
         $steps = $actions[$action] ?? null;
@@ -39,6 +41,7 @@ class ActionRunner
                 throw new RuntimeException("Action [{$action}] step [{$index}] has an empty command.");
             }
 
+            $command = $this->resolveCommandTemplate($action, $index, $command, $params);
             $resolvedCommand = $type === 'artisan'
                 ? sprintf('php artisan %s', $command)
                 : $command;
@@ -93,5 +96,32 @@ class ActionRunner
         }
 
         return $results;
+    }
+
+    /**
+     * @param array<string, string> $params
+     */
+    private function resolveCommandTemplate(string $action, int $index, string $command, array $params): string
+    {
+        $resolved = preg_replace_callback(
+            '/\{([A-Za-z0-9_-]+)\}/',
+            function (array $matches) use ($action, $index, $params): string {
+                $name = (string) ($matches[1] ?? '');
+                $value = $params[$name] ?? null;
+
+                if (! is_string($value) || $value === '') {
+                    throw new RuntimeException("Action [{$action}] step [{$index}] requires parameter [{$name}].");
+                }
+
+                return escapeshellarg($value);
+            },
+            $command,
+        );
+
+        if (! is_string($resolved)) {
+            throw new RuntimeException("Action [{$action}] step [{$index}] command template is invalid.");
+        }
+
+        return $resolved;
     }
 }

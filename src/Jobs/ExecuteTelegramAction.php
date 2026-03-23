@@ -21,8 +21,12 @@ class ExecuteTelegramAction implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
+    /**
+     * @param array<string, string> $params
+     */
     public function __construct(
         public readonly int $runId,
+        public readonly array $params = [],
     ) {
     }
 
@@ -59,7 +63,7 @@ class ExecuteTelegramAction implements ShouldQueue
         ]);
 
         try {
-            $steps = $runner->run($run->action);
+            $steps = $runner->run($run->action, $this->params);
 
             $run->update([
                 'status' => 'succeeded',

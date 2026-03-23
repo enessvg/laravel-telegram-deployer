@@ -126,7 +126,7 @@ class TelegramWebhookController extends Controller
             'summary' => 'Run accepted and queued.',
         ]);
 
-        $job = new ExecuteTelegramAction($run->id);
+        $job = new ExecuteTelegramAction($run->id, $parsed->params);
         $connection = config('telegram-deployer.queue.connection');
         $queue = (string) config('telegram-deployer.queue.name', 'default');
 
