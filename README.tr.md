@@ -1,52 +1,52 @@
 # enessvg/laravel-telegram-deployer
 
-English | [Turkce](./README.tr.md)
+[English](./README.md) | Turkce
 
-Telegram webhook-triggered, TOTP-protected, queue-based deploy/action runner for Laravel.
+Telegram webhook tetiklemeli, TOTP dogrulamali ve queue tabanli deploy/action calistirici Laravel package.
 
-## Supported Versions
+## Desteklenen Surumler
 
 - Laravel 11.x
 - Laravel 12.x
 - Laravel 13.x (PHP 8.3+)
 
-## Command Format
+## Komut Formati
 
-Only this format is supported:
+Sadece su format desteklenir:
 
 `/run {action} [key=value ...] {token}`
 
-Examples:
+Ornekler:
 
 - `/run deploy 123456`
 - `/run seed class=Database\\Seeders\\UserSeeder 123456`
 
-## Features
+## Ozellikler
 
-- Telegram webhook secret validation
-- Chat/User allowlist authorization
-- TOTP validation (`period`, `digits`, `window`)
-- Replay protection (single use per token+window)
+- Telegram webhook secret dogrulama
+- Chat/User allowlist yetkilendirme
+- TOTP dogrulama (`period`, `digits`, `window`)
+- Replay koruma (ayni token+window tek kullanim)
 - Global single-run lock
 - Fail-fast action pipeline (`artisan` + `shell`)
-- DB run logs (`telegram_deployer_runs`)
-- Telegram status messaging
+- DB run loglari (`telegram_deployer_runs`)
+- Telegram sonuc mesajlama
 
-## Installation (Host App)
+## Kurulum (Host App)
 
-1. Register the service provider.
-2. Publish config and fill `.env`.
-3. Run migrations.
-4. Run a queue worker.
-5. Set Telegram webhook.
+1. Service provider'i register et.
+2. Config publish et ve `.env` doldur.
+3. Migration'lari calistir.
+4. Queue worker calistir.
+5. Telegram webhook set et.
 
-## Artisan Commands
+## Artisan Komutlari
 
 - `php artisan telegram-deployer:generate-secret`
-- `php artisan telegram-deployer:generate-secret --qr` (prints QR in terminal if `qrencode` is installed)
+- `php artisan telegram-deployer:generate-secret --qr` (`qrencode` varsa terminale QR basar)
 - `php artisan telegram-deployer:set-webhook {url?}`
 
-## Core Config Keys
+## Temel Config Alanlari
 
 - `telegram.bot_token`
 - `telegram.webhook_path`
@@ -58,7 +58,7 @@ Examples:
 - `locks.global_lock_seconds`
 - `actions`
 
-## Parameterized Action Example
+## Parametreli Action Ornegi
 
 ```php
 'actions' => [
