@@ -34,11 +34,53 @@ Ornekler:
 
 ## Kurulum (Host App)
 
-1. Service provider'i register et.
-2. Config publish et ve `.env` doldur.
-3. Migration'lari calistir.
-4. Queue worker calistir.
-5. Telegram webhook set et.
+1. Paketi kur:
+
+```bash
+composer require enessvg/laravel-telegram-deployer
+```
+
+2. Config ve migration dosyalarini publish et:
+
+```bash
+php artisan vendor:publish --tag=telegram-deployer-config
+php artisan vendor:publish --tag=telegram-deployer-migrations
+```
+
+3. `.env` dosyana su key'leri ekle (degerleri ihtiyacina gore doldur):
+
+```dotenv
+TELEGRAM_DEPLOYER_BOT_TOKEN=
+TELEGRAM_DEPLOYER_WEBHOOK_PATH=
+TELEGRAM_DEPLOYER_WEBHOOK_SECRET=
+TELEGRAM_DEPLOYER_ALLOWED_CHAT_IDS=
+TELEGRAM_DEPLOYER_ALLOWED_USER_IDS=
+
+TELEGRAM_DEPLOYER_OTP_SECRET=
+TELEGRAM_DEPLOYER_OTP_PERIOD=
+TELEGRAM_DEPLOYER_OTP_DIGITS=
+TELEGRAM_DEPLOYER_OTP_WINDOW=
+TELEGRAM_DEPLOYER_OTP_ISSUER=
+TELEGRAM_DEPLOYER_OTP_LABEL=
+
+TELEGRAM_DEPLOYER_QUEUE_CONNECTION=
+TELEGRAM_DEPLOYER_QUEUE=
+
+TELEGRAM_DEPLOYER_GLOBAL_LOCK_KEY=
+TELEGRAM_DEPLOYER_GLOBAL_LOCK_SECONDS=
+
+TELEGRAM_DEPLOYER_STEP_TIMEOUT=
+TELEGRAM_DEPLOYER_WORKING_DIRECTORY=
+```
+
+4. Migration'lari calistir:
+
+```bash
+php artisan migrate --force
+```
+
+5. Queue worker calistir.
+6. Telegram webhook set et.
 
 ## Artisan Komutlari
 

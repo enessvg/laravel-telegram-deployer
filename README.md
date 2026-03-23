@@ -34,11 +34,53 @@ Examples:
 
 ## Installation (Host App)
 
-1. Register the service provider.
-2. Publish config and fill `.env`.
-3. Run migrations.
-4. Run a queue worker.
-5. Set Telegram webhook.
+1. Install the package:
+
+```bash
+composer require enessvg/laravel-telegram-deployer
+```
+
+2. Publish config and migrations:
+
+```bash
+php artisan vendor:publish --tag=telegram-deployer-config
+php artisan vendor:publish --tag=telegram-deployer-migrations
+```
+
+3. Add these env keys to `.env` (fill values as needed):
+
+```dotenv
+TELEGRAM_DEPLOYER_BOT_TOKEN=
+TELEGRAM_DEPLOYER_WEBHOOK_PATH=
+TELEGRAM_DEPLOYER_WEBHOOK_SECRET=
+TELEGRAM_DEPLOYER_ALLOWED_CHAT_IDS=
+TELEGRAM_DEPLOYER_ALLOWED_USER_IDS=
+
+TELEGRAM_DEPLOYER_OTP_SECRET=
+TELEGRAM_DEPLOYER_OTP_PERIOD=
+TELEGRAM_DEPLOYER_OTP_DIGITS=
+TELEGRAM_DEPLOYER_OTP_WINDOW=
+TELEGRAM_DEPLOYER_OTP_ISSUER=
+TELEGRAM_DEPLOYER_OTP_LABEL=
+
+TELEGRAM_DEPLOYER_QUEUE_CONNECTION=
+TELEGRAM_DEPLOYER_QUEUE=
+
+TELEGRAM_DEPLOYER_GLOBAL_LOCK_KEY=
+TELEGRAM_DEPLOYER_GLOBAL_LOCK_SECONDS=
+
+TELEGRAM_DEPLOYER_STEP_TIMEOUT=
+TELEGRAM_DEPLOYER_WORKING_DIRECTORY=
+```
+
+4. Run migrations:
+
+```bash
+php artisan migrate --force
+```
+
+5. Run a queue worker.
+6. Set Telegram webhook.
 
 ## Artisan Commands
 
