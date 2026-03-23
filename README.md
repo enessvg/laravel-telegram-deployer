@@ -2,6 +2,12 @@
 
 Telegram webhook tetiklemeli, TOTP doğrulamalı ve queue tabanlı deploy/action çalıştırıcı Laravel package.
 
+## Desteklenen sürümler
+
+- Laravel 11.x
+- Laravel 12.x
+- Laravel 13.x (PHP 8.3+)
+
 ## Komut formatı
 
 Sadece şu format desteklenir:
