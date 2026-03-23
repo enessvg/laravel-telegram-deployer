@@ -98,7 +98,7 @@ class TelegramWebhookController extends Controller
             ]);
         }
 
-        if (! $replayGuard->consume($parsed->token, $counter)) {
+        if (! $replayGuard->consume($parsed->token, $counter, $parsed->action)) {
             $this->notify($telegramApiClient, $context->chatId, 'Token already used in this time window.');
 
             return response()->json([
